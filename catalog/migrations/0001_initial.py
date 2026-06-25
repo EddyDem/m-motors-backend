@@ -7,25 +7,66 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Vehicle',
+            name="Vehicle",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('marque', models.CharField(max_length=80, verbose_name='marque')),
-                ('modele', models.CharField(max_length=80, verbose_name='modèle')),
-                ('motorisation', models.CharField(choices=[('essence', 'Essence'), ('diesel', 'Diesel'), ('hybride', 'Hybride'), ('electrique', 'Électrique')], max_length=20, verbose_name='motorisation')),
-                ('kilometrage', models.PositiveIntegerField(default=0, verbose_name='kilométrage')),
-                ('prix', models.DecimalField(decimal_places=2, max_digits=10, verbose_name='prix')),
-                ('mode', models.CharField(choices=[('achat', 'Achat'), ('location', 'Location')], default='achat', max_length=20, verbose_name='mode')),
-                ('disponible', models.BooleanField(default=True, verbose_name='disponible')),
-                ('cree_le', models.DateTimeField(auto_now_add=True, verbose_name='créé le')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("marque", models.CharField(max_length=80, verbose_name="marque")),
+                ("modele", models.CharField(max_length=80, verbose_name="modèle")),
+                (
+                    "motorisation",
+                    models.CharField(
+                        choices=[
+                            ("essence", "Essence"),
+                            ("diesel", "Diesel"),
+                            ("hybride", "Hybride"),
+                            ("electrique", "Électrique"),
+                        ],
+                        max_length=20,
+                        verbose_name="motorisation",
+                    ),
+                ),
+                (
+                    "kilometrage",
+                    models.PositiveIntegerField(default=0, verbose_name="kilométrage"),
+                ),
+                (
+                    "prix",
+                    models.DecimalField(
+                        decimal_places=2, max_digits=10, verbose_name="prix"
+                    ),
+                ),
+                (
+                    "mode",
+                    models.CharField(
+                        choices=[("achat", "Achat"), ("location", "Location")],
+                        default="achat",
+                        max_length=20,
+                        verbose_name="mode",
+                    ),
+                ),
+                (
+                    "disponible",
+                    models.BooleanField(default=True, verbose_name="disponible"),
+                ),
+                (
+                    "cree_le",
+                    models.DateTimeField(auto_now_add=True, verbose_name="créé le"),
+                ),
             ],
             options={
-                'ordering': ('marque', 'modele'),
+                "ordering": ("marque", "modele"),
             },
         ),
     ]
