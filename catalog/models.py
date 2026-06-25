@@ -1,5 +1,7 @@
 """Catalogue de véhicules"""
 
+from decimal import Decimal
+
 from django.db import models
 
 
@@ -28,6 +30,12 @@ class Vehicle(models.Model):
     )
     disponible = models.BooleanField("disponible", default=True)
     cree_le = models.DateTimeField("créé le", auto_now_add=True)
+
+    def estimation_loyer_mensuel(self, duree_mois=36, coefficient=Decimal("0.015")):
+        # Estimation simple d'un loyer mensuel de location longue durée
+        if duree_mois <= 0:
+            raise ValueError("La durée doit être strictement positive.")
+        return (self.prix * coefficient).quantize(Decimal("0.01"))
 
     class Meta:
         ordering = ("marque", "modele")
