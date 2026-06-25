@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "accounts",
     "catalog",
     "dossiers",
+    "subscriptions"
 ]
 
 MIDDLEWARE = [
