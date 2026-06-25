@@ -2,6 +2,7 @@
 
 from django.conf import settings
 from django.core.validators import FileExtensionValidator
+from django.core.exceptions import ValidationError
 from django.db import models
 
 from dossiers.validators import validate_file_size
@@ -32,6 +33,21 @@ class Dossier(models.Model):
     motif_refus = models.TextField("motif de refus", blank=True)
     cree_le = models.DateTimeField("crée le", auto_now_add=True)
     maj_le = models.DateTimeField("mis à jour le", auto_now=True)
+
+    def valider(self):
+        """Passe le dossier a VALIDE et efface tout motif de refus"""
+        self.statut = self.Statut.VALIDE
+        self.motif_refus = ""
+        self.save(update_fields=("statut", "motif_refus", "maj_le"))
+
+    def refuser(self, motif):
+        """Passe le dossier a REFUSE. Le motif est obligatoire"""
+        motif = (motif or "").strip()
+        if not motif:
+            raise ValidationError("Un motif est obligatoire pour refuser un dossier")
+        self.statut = self.Statut.REFUSE
+        self.motif_refus = motif
+        self.save(update_fields=("statut", "motif_refus", "maj_le"))
 
     class Meta:
         ordering = ("-cree_le",)

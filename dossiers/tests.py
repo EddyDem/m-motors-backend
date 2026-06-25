@@ -7,6 +7,8 @@ from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import override_settings
 from django.urls import reverse
 from rest_framework.test import APITestCase
+from django.core.exceptions import ValidationError
+from django.test import TestCase
 
 from dossiers.models import Dossier
 
@@ -64,3 +66,30 @@ class DossierTestCase(APITestCase):
         url = reverse("dossier-documents", args=(dossier.pk,))
         response = self.client.post(url, {"fichier": fichier}, format="multipart")
         self.assertEqual(response.status_code, 400)
+
+class DossierValidationTestCase(TestCase):
+
+    def setUp(self):
+        self.client_user = User.objects.create_user(
+            email="client@example.com", password="TestPassword123!"
+        )
+        self.dossier = Dossier.objects.create(
+            client=self.client_user, type=Dossier.Type.ACHAT
+        )
+
+    def test_valider_passe_au_statut_valide(self):
+        self.dossier.refuser("Pièce illisible")
+        self.dossier.valider()
+        self.assertEqual(self.dossier.statut, Dossier.Statut.VALIDE)
+        self.assertEqual(self.dossier.motif_refus, "")
+
+    def test_refuser_enregistre_le_motif(self):
+        self.dossier.refuser("Justificatif manquant")
+        self.assertEqual(self.dossier.statut, Dossier.Statut.REFUSE)
+        self.assertEqual(self.dossier.motif_refus, "Justificatif manquant")
+
+    def test_refuser_sans_motif_leve_une_erreur(self):
+        with self.assertRaises(ValidationError):
+            self.dossier.refuser("   ")
+        self.dossier.refresh_from_db()
+        self.assertEqual(self.dossier.statut, Dossier.Statut.DEPOSE)
