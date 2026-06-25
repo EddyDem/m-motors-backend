@@ -30,7 +30,9 @@ def env_list(name, default=""):
 SECRET_KEY = os.getenv("SECRET_KEY")
 
 if not SECRET_KEY:
-    raise ValueError("La variable d'environnement SECRET_KEY n'est pas définie. Veuillez la définir dans le fichier .env ou dans les variables d'environnement du système.")
+    raise ValueError(
+        "La variable d'environnement SECRET_KEY n'est pas définie. Veuillez la définir dans le fichier .env ou dans les variables d'environnement du système."
+    )
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env_bool("DEBUG", "True")
@@ -53,6 +55,7 @@ INSTALLED_APPS = [
     "django_filters",
     "accounts",
     "catalog",
+    "dossiers",
 ]
 
 MIDDLEWARE = [
