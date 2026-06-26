@@ -18,11 +18,9 @@ def calculer_devis(vehicule, options, duree_mois=36):
         raise ValueError("La durée doit être strictement positive.")
     if vehicule.mode != Vehicle.Mode.LOCATION:
         raise ValueError("Ce véhicule n'est pas proposé à la location.")
-    
+
     loyer_base = vehicule.estimation_loyer_mensuel(duree_mois)
-    options_mensuel = sum(
-        (o.prix_mensuel for o in options), Decimal("0.00")
-    )
+    options_mensuel = sum((o.prix_mensuel for o in options), Decimal("0.00"))
     total_mensuel = (loyer_base + options_mensuel).quantize(Decimal("0.01"))
     total_engagement = (total_mensuel * duree_mois).quantize(Decimal("0.01"))
 

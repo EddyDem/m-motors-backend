@@ -31,10 +31,11 @@ class VehicleAdmin(admin.ModelAdmin):
                 "%d véhicule passé en location.",
                 "%d véhicules passés en location.",
                 nb,
-            ) % nb,
+            )
+            % nb,
             messages.SUCCESS,
         )
-        
+
     @admin.action(description="Passer en vente")
     def passer_en_vente(self, request, queryset):
         nb = queryset.update(mode=Vehicle.Mode.ACHAT)
@@ -44,6 +45,7 @@ class VehicleAdmin(admin.ModelAdmin):
                 "%d véhicule passé en vente.",
                 "%d véhicules passés en vente.",
                 nb,
-            ) % nb,
+            )
+            % nb,
             messages.SUCCESS,
         )

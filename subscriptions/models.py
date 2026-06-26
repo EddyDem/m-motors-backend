@@ -25,7 +25,7 @@ class Option(models.Model):
 
     def __str__(self):
         return f"{self.libelle} ({self.prix_mensuel} €/mois)"
-    
+
 
 class Contract(models.Model):
     """Contrat de location longue durée souscrit par un client."""
