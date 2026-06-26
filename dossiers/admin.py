@@ -24,7 +24,7 @@ class MotifRefusForm(forms.Form):
         required=True,
     )
 
-    
+
 @admin.register(Dossier)
 class DossierAdmin(admin.ModelAdmin):
     list_display = ("id", "client", "type", "statut", "cree_le")
@@ -41,9 +41,7 @@ class DossierAdmin(admin.ModelAdmin):
         nb = queryset.count()
         self.message_user(
             request,
-            ngettext(
-                "%d dossier validé.", "%d dossiers validés.", nb
-            ) % nb,
+            ngettext("%d dossier validé.", "%d dossiers validés.", nb) % nb,
             messages.SUCCESS,
         )
 
@@ -63,9 +61,7 @@ class DossierAdmin(admin.ModelAdmin):
                 nb = queryset.count()
                 self.message_user(
                     request,
-                    ngettext(
-                        "%d dossier refusé.", "%d dossiers refusés.", nb
-                    ) % nb,
+                    ngettext("%d dossier refusé.", "%d dossiers refusés.", nb) % nb,
                     messages.SUCCESS,
                 )
                 return None

@@ -21,7 +21,7 @@ class OptionViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = OptionSerializer
     permission_classes = (AllowAny,)
     pagination_class = None
-    
+
 
 class ContractViewSet(
     mixins.CreateModelMixin,
@@ -36,7 +36,7 @@ class ContractViewSet(
 
     def get_queryset(self):
         return Contract.objects.filter(client=self.request.user)
-    
+
     @action(detail=False, methods=("post",))
     def devis(self, request):
         """Calcule le prix sans rien enregistrer (aperçu)"""
@@ -48,7 +48,7 @@ class ContractViewSet(
             entree.validated_data["duree_mois"],
         )
         return Response(recap)
-    
+
     def create(self, request, *args, **kwargs):
         """Souscrit : fige les montants calculés dans le contrat"""
         entree = ContractInputSerializer(data=request.data)

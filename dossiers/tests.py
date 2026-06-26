@@ -67,6 +67,7 @@ class DossierTestCase(APITestCase):
         response = self.client.post(url, {"fichier": fichier}, format="multipart")
         self.assertEqual(response.status_code, 400)
 
+
 class DossierValidationTestCase(TestCase):
 
     def setUp(self):

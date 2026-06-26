@@ -9,8 +9,8 @@ from django.contrib.auth import get_user_model
 
 from catalog.models import Vehicle
 
-
 User = get_user_model()
+
 
 class VehicleModelTestCase(TestCase):
     def test_str(self):
@@ -63,9 +63,7 @@ class VehicleAdminActionTestCase(TestCase):
         )
 
     def test_passer_en_location(self):
-        Vehicle.objects.filter(pk=self.location.pk).update(
-            mode=Vehicle.Mode.LOCATION
-        )
+        Vehicle.objects.filter(pk=self.location.pk).update(mode=Vehicle.Mode.LOCATION)
         self.location.refresh_from_db()
         self.assertEqual(self.location.mode, Vehicle.Mode.LOCATION)
 
@@ -76,17 +74,18 @@ class VehicleAdminWebTestCase(TestCase):
             email="admin@example.com", password="TestPassword123!"
         )
         self.vehicule = Vehicle.objects.create(
-            marque="Renault", modele="Clio",
+            marque="Renault",
+            modele="Clio",
             motorisation=Vehicle.Motorisation.ESSENCE,
-            prix=Decimal("17000.00"), mode=Vehicle.Mode.ACHAT,
+            prix=Decimal("17000.00"),
+            mode=Vehicle.Mode.ACHAT,
         )
 
     def test_action_passer_en_location(self):
         self.client.force_login(self.admin)
         self.client.post(
             reverse("admin:catalog_vehicle_changelist"),
-            {"action": "passer_en_location",
-             "_selected_action": [self.vehicule.pk]},
+            {"action": "passer_en_location", "_selected_action": [self.vehicule.pk]},
         )
         self.vehicule.refresh_from_db()
         self.assertEqual(self.vehicule.mode, Vehicle.Mode.LOCATION)
