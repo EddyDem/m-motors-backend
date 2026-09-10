@@ -1,6 +1,10 @@
 # M-Motors — API (back-end)
 
-API REST de la refonte M-Motors: vente de véhicules d'occasion et location longue durée avec option d'achat (LOA). Front React dans le dépôt `m-motors-frontend`.
+## Contexte
+
+Projet scolaire conservé comme référence historique. Ce dépôt contient l'API Django/Django REST Framework de M-Motors: comptes, catalogue de véhicules, dossiers et souscription. L'interface est dans le [dépôt frontend](https://github.com/EddyDem/m-motors-frontend).
+
+API REST de la refonte M-Motors: vente de véhicules d'occasion et location longue durée avec option d'achat (LOA).
 
 ## Stack
 
